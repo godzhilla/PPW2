@@ -28,16 +28,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/buku',[BukuController::class, 'index'])->name('buku');
+    
+    Route::get('buku/search', [BukuController::class, 'search'])->name('buku.search');
+
+    Route::middleware('admin')->group(function () {
+        Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');
+        Route::post('buku', [BukuController::class, 'store'])->name('buku.store');
+        Route::post('buku/{id}', [BukuController::class, 'destroy'])->name('buku.destroy');
+        Route::get('buku/edit/{id}', [BukuController::class, 'edit'])->name('buku.edit');
+        Route::post('buku/update/{id}', [BukuController::class, 'update'])->name('buku.update');
+    });
 });
 
 require __DIR__.'/auth.php';
-
-Route::get('/buku',[BukuController::class, 'index'])->name('buku');
-
-Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');
-Route::post('buku', [BukuController::class, 'store'])->name('buku.store');
-Route::post('buku/{id}', [BukuController::class, 'destroy'])->name('buku.destroy');
-Route::get('buku/edit/{id}', [BukuController::class, 'edit'])->name('buku.edit');
-Route::post('buku/update/{id}', [BukuController::class, 'update'])->name('buku.update');
-
-Route::get('buku/search', [BukuController::class, 'search'])->name('buku.search');

@@ -33,18 +33,22 @@
                 <th scope="row">{{$buku->penulis}}</th>
                 <th scope="row">{{"Rp ".number_format($buku->harga, 0, ',', '.')}}</th>
                 <td scope="row">{{ \Carbon\Carbon::parse($buku->tgl_terbit)->format('d/m/Y')}}</td>
-                <th scope="row">
-                    <form action="{{route('buku.edit', $buku->id)}}">
-                        @csrf
-                        <button> Edit</button>
-                    </form>
-                </th>
-                <th scope="row">
-                    <form action="{{route('buku.destroy', $buku->id)}}" method="post">
-                        @csrf
-                        <button onclick="return confirm('Yakin mau dihapus?')"> Hapus</button>
-                    </form>
-                </th>
+               
+                {{-- @if (Auth::user()->level=='admin') --}}
+                    <th scope="row">
+                        <form action="{{route('buku.edit', $buku->id)}}">
+                            @csrf
+                            <button> Edit</button>
+                        </form>
+                    </th>
+                    <th scope="row">
+                        <form action="{{route('buku.destroy', $buku->id)}}" method="post">
+                            @csrf
+                            <button onclick="return confirm('Yakin mau dihapus?')"> Hapus</button>
+                        </form>
+                    </th>
+                {{-- @endif --}}
+                
             </tr>
             @endforeach
         </tbody>
@@ -53,6 +57,8 @@
     <p>Jumlah Data: {{ $jumlahData }}</p>
     <p>Total Harga Buku: {{ "Rp ".number_format($totalHarga, 2, ', ','.')}}</p>
 
-    <button><a href="{{route('buku.create')}}"> Tambah Buku </a></button>
+    {{-- @if (Auth::check()&& Auth::user()->level=='admin') --}}
+        <button><a href="{{route('buku.create')}}"> Tambah Buku </a></button>
+    {{-- @endif --}}
 
 @endsection
