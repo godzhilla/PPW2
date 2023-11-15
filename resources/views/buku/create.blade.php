@@ -51,6 +51,10 @@
                 </div>
             </div>
 
+            <div>
+                <input type="file" name="thumbnail" id="thumbnail" alt="thumbnail">
+            </div>
+
             <div><button type="submit" class="simpan">Simpan</button></div>
             <a href="/buku"> Batal</a>
             

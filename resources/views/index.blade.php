@@ -18,6 +18,7 @@
         <thead></thead>
             <tr>
                 <th scope="col">id</th>
+                <th scope="col"> </th>
                 <th scope="col">Judul Buku</th>
                 <th scope="col">Penulis</th>
                 <th scope="col">Harga</th>
@@ -29,7 +30,18 @@
             @foreach($data_buku as $buku)
             <tr>
                 <th scope="row">{{++$no}}</th>
-                <th scope="row">{{$buku->judul}}</th>
+                <th scope="row">
+                    @if ($buku->filepath)
+                        <div class="relative h-10 w-10">
+                            <img
+                            class="h-full w-full rounded-full object-cover object-center"
+                            src="{{ asset($buku->filepath) }}"
+                            alt=""
+                            />
+                        </div>
+                    @endif
+                </th>
+                <th scope="row"> {{$buku->judul}} </th>
                 <th scope="row">{{$buku->penulis}}</th>
                 <th scope="row">{{"Rp ".number_format($buku->harga, 0, ',', '.')}}</th>
                 <td scope="row">{{ \Carbon\Carbon::parse($buku->tgl_terbit)->format('d/m/Y')}}</td>

@@ -12,7 +12,7 @@
 <body>
 <div class="container">
     <h4>Edit Buku</h4>
-    <form action="{{route('buku.update',$buku->id)}}" method="POST">
+    <form enctype="multipart/form-data" action="{{route('buku.update',$buku->id)}}" method="POST">
         @csrf
         <div class="form-group row">
             <label for="judul" class="col-sm-2 col-form-label">Judul :</label>
@@ -25,11 +25,44 @@
         <div class="form-group row">
             <label for="harga" class="col-sm-2 col-form-label">Harga :</label>
             <input type="text" name="harga" id="harga" class="form-control" value="{{$buku->harga}}">
-        </div class="form-group row">
-        <div>
-            <label for="tgl_terbit" class="col-sm-2 col-form-label">Tgl. Terbit :</label>
-            <input type="text" name="tgl_terbit" id="tgl_terbit" class="date form-control" placeholder="yyyy/mm/dd">
         </div>
+        <div class="form-group row">
+            <label for="tgl_terbit" class="col-sm-2 col-form-label">Tgl. Terbit :</label>
+            <input type="date" name="tgl_terbit" id="tgl_terbit" class="date form-control" placeholder="yyyy/mm/dd">
+        </div>
+        <div>
+            <input type="file" name="thumbnail" id="thumbnail" alt="thumbnail">
+        </div>
+    
+        <div class="mb-3">
+            <label class="form-label">Gallery</label>
+            <div id="file-inputs">
+                <input class="form-control" type="file" name="gallery[]" id="gallery">
+            </div>
+            <div id="tambahGallery">
+            </div>
+                    <script>
+                        function tambahData() {
+                            var container = document.getElementById("tambahGallery");
+                            container.innerHTML += '<input type="file" name="gallery[]" class="form-control" id="gallery"><br>';
+                        }
+                    </script>
+        </div>
+
+        <div class="gallery_items">
+            @foreach ($buku->galleries()->get() as $gallery)
+                <div class="gallery_item">
+                    <label for="galeri" class="col-sm-2 col-form-label">Galeri :</label>
+                    <img
+                    class="rounded-full object-cover object-center"
+                    src="{{asset($gallery->path)}}"
+                    alt=""
+                    width="400"
+                    />
+                </div>
+            @endforeach
+        </div>
+
         <div><button type="submit" class="simpan">Simpan</button></div>
         <a href="/buku"> Batal</a>
     </form>
