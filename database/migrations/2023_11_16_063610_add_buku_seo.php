@@ -11,18 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('galeri', function (Blueprint $table) {
-            $table->string('path')->nullable()->after('nama_galeri');
+        Schema::table('buku', function (Blueprint $table) {
+            
+            $table->string('buku_seo')->nullable();
+            $table->string('foto')->nullable();
         });
     }
 
-    /**bvc 
+    /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::table('galeri', function (Blueprint $table) {
-            $table->dropColumn('path');
+        Schema::table('buku', function (Blueprint $table) {
+            $table->dropColumn('buku_seo');
+            $table->dropColumn('foto');
         });
     }
 };

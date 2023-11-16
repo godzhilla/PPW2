@@ -36,17 +36,15 @@
     
         <div class="mb-3">
             <label class="form-label">Gallery</label>
-            <div id="file-inputs">
-                <input class="form-control" type="file" name="gallery[]" id="gallery">
-            </div>
-            <div id="tambahGallery">
+            <input type="file" name="gallery[]" id="gallery">
+            {{-- <div id="tambahGallery">
             </div>
                     <script>
                         function tambahData() {
                             var container = document.getElementById("tambahGallery");
                             container.innerHTML += '<input type="file" name="gallery[]" class="form-control" id="gallery"><br>';
                         }
-                    </script>
+                    </script> --}}
         </div>
 
         <div class="gallery_items">

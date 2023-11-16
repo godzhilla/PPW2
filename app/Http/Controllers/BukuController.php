@@ -100,7 +100,7 @@ class BukuController extends Controller
     public function update(Request $request, string $id)
     {
         $buku = Buku::find($id);
-
+        if ($request->file('thumbnail')) {
         $request->validate([
             'thumbnail' => 'image|mimes:jpeg,jpg,png|max:2048'
         ]);
@@ -118,7 +118,7 @@ class BukuController extends Controller
             'filename'      => $fileName,
             'filepath'      => '/storage/' . $filePath
         ]);
-
+    }
         return redirect('/buku')->with('pesan','Data Buku Berhasil di Update');
 
         if ($request->file('gallery')) {
