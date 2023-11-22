@@ -31,20 +31,22 @@
             <input type="date" name="tgl_terbit" id="tgl_terbit" class="date form-control" placeholder="yyyy/mm/dd">
         </div>
         <div>
+            <label class="form-label">Thumbnail</label><br>
             <input type="file" name="thumbnail" id="thumbnail" alt="thumbnail">
         </div>
     
         <div class="mb-3">
-            <label class="form-label">Gallery</label>
+            <label class="form-label">Gallery</label><br>
             <input type="file" name="gallery[]" id="gallery">
-            {{-- <div id="tambahGallery">
+            <div id="tambahGallery">
             </div>
-                    <script>
-                        function tambahData() {
-                            var container = document.getElementById("tambahGallery");
-                            container.innerHTML += '<input type="file" name="gallery[]" class="form-control" id="gallery"><br>';
-                        }
-                    </script> --}}
+            <a href="#" onclick="tambahData()">Tambah Gallery</a>
+            <script>
+                function tambahData() {
+                    var container = document.getElementById("tambahGallery");
+                    container.innerHTML += '<input type="file" name="gallery[]" id="gallery"><br>';
+                }
+            </script>
         </div>
 
         <div class="gallery_items">
@@ -57,6 +59,7 @@
                     alt=""
                     width="400"
                     />
+                    <a href="{{ route('deleteGalleryImage', ['id' => $gallery->id]) }}" class="mb-3" onclick="hapusData()">Hapus Data</a>
                 </div>
             @endforeach
         </div>

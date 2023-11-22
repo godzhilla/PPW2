@@ -11,4 +11,9 @@ class PublicViewController extends Controller
         $data_buku = Buku::all();
         return view('buku.list', compact('data_buku'));
     }
+
+    public function showDetail() {
+        $data_buku = Buku::all();
+        return view('buku.detail', compact('data_buku'));
+    }
 }

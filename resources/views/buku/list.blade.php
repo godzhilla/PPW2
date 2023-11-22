@@ -43,7 +43,7 @@
                         @endif
                     </th>
                     
-                    <th scope="row"> <a href=""> {{$buku->judul}} </a> </th>
+                    <th scope="row"> <a href="{{route('buku.detail', $buku->id)}}"> {{$buku->judul}} </a> </th>
                     
                     <th scope="row">{{$buku->penulis}}</th>
                     <th scope="row">{{"Rp ".number_format($buku->harga, 0, ',', '.')}}</th>

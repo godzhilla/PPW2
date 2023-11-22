@@ -40,9 +40,11 @@ Route::middleware('auth')->group(function () {
         Route::post('buku/{id}', [BukuController::class, 'destroy'])->name('buku.destroy');
         Route::get('buku/edit/{id}', [BukuController::class, 'edit'])->name('buku.edit');
         Route::post('buku/update/{id}', [BukuController::class, 'update'])->name('buku.update');
+        Route::get('/buku/delete-gallery/{id}', [BukuController::class, 'deleteGalleryImage'])->name('deleteGalleryImage');
     });
 });
 
 require __DIR__.'/auth.php';
 
-Route::get('/list', [PublicViewController::class, 'showList'])->name('buku.list');
+Route::get('/list', [BukuController::class, 'showList'])->name('buku.list');
+Route::get('list/detail/{id}', [BukuController::class, 'galbuku'])->name('buku.detail');
