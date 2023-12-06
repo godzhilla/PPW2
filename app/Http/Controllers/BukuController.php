@@ -182,6 +182,34 @@ class BukuController extends Controller
         return redirect()->back()->with('pesan', 'Gambar Galeri Berhasil dihapus');
     }
 
+    public function showRating()
+    {
+        $data_buku = Buku::all();
+        return view('buku.rating', compact('data_buku'));
+    }
+
+    public function reviewbuku(Request $request){
+        // Validate the incoming request data
+        $request->validate([
+            'buku_id' => 'required', // Add any other validation rules you need
+            'rating' => 'required|numeric|min:1|max:5', // Adjust the validation rules for the rating field
+        ]);
+    
+        // Create a new ReviewRating instance
+        $review = new Rating();
+    
+        // Assign values from the request to the ReviewRating instance
+        $review->buku_id = $request->buku_id;
+        $review->star_rating = $request->rating;
+    
+        // Save the review to the database
+        $review->save();
+    
+        // Redirect back with a success message
+        return redirect()->back()->with('flash_msg_success', 'Your review has been submitted successfully.');
+    }
+
+
     public function showList()
     {
         $data_buku = Buku::all();
@@ -192,6 +220,30 @@ class BukuController extends Controller
         $buku = Buku::find($id);
         
         return view('buku.detail', compact('buku'));
+    }
+
+    public function addToFavorite($id) {
+        $user = Auth::user($id);
+
+        if ($user) {
+            $buku = Buku::find($id);
+
+            if ($buku) {
+                if ($user -> contains($buku->id)) {
+                    $user->favoriteBooks()->attach($buku);
+
+                    return redirect()->back()->with('success', 'Buku berhasil ditambahkan ke daftar favorit.');
+
+                } else {
+                    return redirect()->back()->with('error', 'Buku sudah terdapat dalam daftar favorit.');  
+                }
+            } else {
+                return redirect()->back()->with('error', 'Buku tidak ditemukan.');
+            }
+        }
+
+        return redirect()->back()->with('error', 'Buku gagal ditambahkan ke daftar favorit.');
+
     }
     
 }

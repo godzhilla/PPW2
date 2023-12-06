@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\PublicViewController;
+use App\Http\Controllers\ReviewRatingController;
 
 
 
@@ -33,6 +34,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/buku',[BukuController::class, 'index'])->name('buku');
     
     Route::get('buku/search', [BukuController::class, 'search'])->name('buku.search');
+    Route::post('buku/review', [BukuController::class, 'reviewbuku'])->name('buku.review');
+    Route::get('buku/rating', [BukuController::class, 'showRating'])->name('buku.rating');
 
     Route::middleware('admin')->group(function () {
         Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');
@@ -48,3 +51,7 @@ require __DIR__.'/auth.php';
 
 Route::get('/list', [BukuController::class, 'showList'])->name('buku.list');
 Route::get('list/detail/{id}', [BukuController::class, 'galbuku'])->name('buku.detail');
+
+Route::middleware('auth')->group(function () {
+    Route::post('/favorite/{book}', [FavoriteController::class, 'toggleFavorite'])->name('favorite.toggle');
+});

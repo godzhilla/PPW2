@@ -30,4 +30,21 @@ class Buku extends Model
     public function photos() {
         return $this -> hasMany('App\Buku', 'id_buku', 'id');
     }
+
+    public function addToFavorites(User $user)
+    {
+        $this->users()->attach($user->id);
+        $this->update(['is_favorite' => true]);
+    }
+
+    public function removeFromFavorites(User $user)
+    {
+        $this->users()->detach($user->id);
+        $this->update(['is_favorite' => false]);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_book_favorites')->withTimestamps();
+    }
 }

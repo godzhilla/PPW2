@@ -29,6 +29,17 @@
             <label for="tgl_terbit" class="col-sm-2 col-form-label">Tgl. Terbit :</label>
             <div type="date" name="tgl_terbit" id="tgl_terbit" class="date form-control" value="{{$buku->tgl_terbit}}">{{$buku->tgl_terbit}}
         </div>
+        <div class="form-group row">
+            <label for="rating" class="col-sm-2 col-form-label">Rating :</label>
+            <div type="text" name="rating" id="rating" class="form-control" value="{{$buku->star_rating}}">{{$buku->star_rating}}
+        </div>
+
+        <form method="post" action="{{ route('favorite.toggle', $book) }}">
+            @csrf
+            <button type="submit">
+                {{ Auth::user()->buku->contains($book) ? 'Hapus dari Favorit' : 'Tambahkan ke Favorit' }}
+            </button>
+        </form>
 
         <div class="gallery_items">
             @foreach ($buku->galleries()->get() as $gallery)

@@ -2,7 +2,7 @@
 @section('content')
 
     @if (Session::has('pesan'))
-        <div class="alert alert-success">{{Session::get('pesan')}}</div> {{--ga muncul apa apa--}}
+        <div class="alert alert-success">{{Session::get('pesan')}}</div>
     @endif
 
     <h1>Daftar Buku Tersedia</h1>
@@ -23,7 +23,11 @@
                 <th scope="col">Penulis</th>
                 <th scope="col">Harga</th>
                 <th scope="col">Tgl. Terbit</th>
-                <th scope="col">Aksi</th>
+                <th scope="col">Rating</th>
+                @if (Auth::user()->level=='admin')
+                    <th scope="col">Aksi</th>
+                @endif
+
             </tr>
         </thead>
         <tbody>
@@ -46,7 +50,9 @@
                 <th scope="row">{{"Rp ".number_format($buku->harga, 0, ',', '.')}}</th>
                 <td scope="row">{{ \Carbon\Carbon::parse($buku->tgl_terbit)->format('d/m/Y')}}</td>
                
-                {{-- @if (Auth::user()->level=='admin') --}}
+                <th scope="row"> <a href="{{route('buku.rating', $buku->id)}}"> {{$buku->star_rating}} </a> </th>
+
+                @if (Auth::user()->level=='admin')
                     <th scope="row">
                         <form action="{{route('buku.edit', $buku->id)}}">
                             @csrf
@@ -59,7 +65,7 @@
                             <button onclick="return confirm('Yakin mau dihapus?')"> Hapus</button>
                         </form>
                     </th>
-                {{-- @endif --}}
+                @endif
                 
             </tr>
             @endforeach
