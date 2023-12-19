@@ -47,4 +47,9 @@ class Buku extends Model
     {
         return $this->belongsToMany(User::class, 'user_book_favorites')->withTimestamps();
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

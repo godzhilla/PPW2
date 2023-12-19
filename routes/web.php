@@ -36,6 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::get('buku/search', [BukuController::class, 'search'])->name('buku.search');
     Route::post('buku/review', [BukuController::class, 'reviewbuku'])->name('buku.review');
     Route::get('buku/rating', [BukuController::class, 'showRating'])->name('buku.rating');
+    Route::get('buku/rating/{add}', [BukuController::class, 'addRating'])->name('buku.addrating');
 
     Route::middleware('admin')->group(function () {
         Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');
@@ -55,3 +56,8 @@ Route::get('list/detail/{id}', [BukuController::class, 'galbuku'])->name('buku.d
 Route::middleware('auth')->group(function () {
     Route::post('/favorite/{book}', [FavoriteController::class, 'toggleFavorite'])->name('favorite.toggle');
 });
+
+Route::get('/top-books', [BukuController::class, 'topBooks'])->name('buku.top10');
+
+Route::get('/buku/reviews/{id}', [BukuController::class, 'showReviews'])->name('buku.reviews');
+Route::post('/buku/reviews/{id}', [BukuController::class, 'storeReview'])->name('buku.storeReview');

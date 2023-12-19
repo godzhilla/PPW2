@@ -24,6 +24,8 @@
                 <th scope="col">Harga</th>
                 <th scope="col">Tgl. Terbit</th>
                 <th scope="col">Rating</th>
+                <th scope="col"> </th>
+                <th scope="col"> </th>
                 @if (Auth::user()->level=='admin')
                     <th scope="col">Aksi</th>
                 @endif
@@ -51,6 +53,16 @@
                 <td scope="row">{{ \Carbon\Carbon::parse($buku->tgl_terbit)->format('d/m/Y')}}</td>
                
                 <th scope="row"> <a href="{{route('buku.rating', $buku->id)}}"> {{$buku->star_rating}} </a> </th>
+                <th scope="row">
+                    <a href="{{ route('buku.reviews', ['id' => $buku->id]) }}" class="btn btn-primary">Beri Ulasan</a>
+                </th>
+                <th scope="row">
+
+                    <div class="favorite-container">
+                    <button id="favoriteButton" class="favorite-button" onclick="toggleFavorite()">Add to Favorites</button>
+                    </div>
+                
+                </th>
 
                 @if (Auth::user()->level=='admin')
                     <th scope="row">
@@ -71,7 +83,12 @@
             @endforeach
         </tbody>
     </table>
-    <div>{{ $data_buku->links() }}</div>
+    <div>{{ $data_buku->links() }}</div> 
+
+    <br>
+    <button id="topButton" class="top-button" onclick="window.location='{{route('buku.top10')}}'">Top 10 Books of The Year</button>
+    <br><br>
+
     <p>Jumlah Data: {{ $jumlahData }}</p>
     <p>Total Harga Buku: {{ "Rp ".number_format($totalHarga, 2, ', ','.')}}</p>
 

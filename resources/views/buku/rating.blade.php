@@ -115,7 +115,7 @@
                                 <div class="container">
                                     <div class="row">
                                        <div class="col mt-4">
-                                          <form class="py-2 px-4" action="{{route('buku.review')}}" style="box-shadow: 0 0 10px 0 #ddd;" method="POST" autocomplete="off">
+                                          <form class="py-2 px-4" action="{{route('buku.addRating', ['id' => $buku->id])}}" style="box-shadow: 0 0 10px 0 #ddd;" method="POST" autocomplete="off">
                                              @csrf
                                              <p class="font-weight-bold ">Review</p>
                                              <div class="form-group row">
@@ -136,8 +136,11 @@
                                                 </div>
                                              </div>
                                              <div class="mt-3 text-right">
-                                                <button class="btn btn-sm py-2 px-3 btn-info">Submit
+                                                <button class="btn btn-sm py-2 px-3 btn-info" type="submit">Submit
                                                 </button>
+                                             </div>
+                                             <div class="mt-3 text-right">
+                                                <a href="/dashboard">Back</a>
                                              </div>
                                           </form>
                                        </div>

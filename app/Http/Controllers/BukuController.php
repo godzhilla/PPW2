@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Buku;
 use App\Models\Gallery;
+use App\Models\Review;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
@@ -244,6 +245,61 @@ class BukuController extends Controller
 
         return redirect()->back()->with('error', 'Buku gagal ditambahkan ke daftar favorit.');
 
+    }
+
+    public function topBooks()
+    {
+        $topBooks = Buku::orderByDesc('star_rating')->take(10)->get();
+
+        return view('buku.top10', compact('topBooks'));
+    }
+
+    public function addRating(Request $request, $id)
+    {
+        $request->validate([
+            'star_rating' => 'required|numeric|min:0|max:5',
+        ]);
+    
+        $buku = Buku::find($bukuId);
+        if (!$buku) {
+            abort(404);
+        }
+    
+        $buku->update([
+            'star_rating' => $request->input('star_rating'),
+        ]);
+    
+        return redirect()->route('buku.rating', compac($buku))->with('success', 'Rating added successfully.');
+    }
+
+    public function showReviews($id)
+    {
+        $buku = Buku::find($id);
+        $reviews = $buku->reviews;
+
+        return view('buku.reviews', compact('buku', 'reviews'));
+    }
+
+    public function storeReview(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required',
+            'comment' => 'required',
+        ]);
+
+        $buku = Buku::find($id);
+        if (!$buku) {
+            abort(404);
+        }
+
+        $review = new Review([
+            'name' => $request->input('name'),
+            'comment' => $request->input('comment'),
+        ]);
+
+        $buku->reviews()->save($review);
+
+        return redirect()->route('buku.reviews', $id)->with('success', 'Review added successfully.');
     }
     
 }
